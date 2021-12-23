@@ -4,7 +4,6 @@ import { CreateNewPollForm } from '../../components';
 const CreateNewPollPage = () => {
   return (
     <>
-      <h1>hi</h1>
       <CreateNewPollForm />
     </>
   );
