@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 const formInitialValues = {
   begin_at: '',
   end_at: '',
-  nbr_voices: 0,
+  nbr_voices: 10,
   logins_voters: '',
   logins_cands: '',
 };
@@ -48,7 +48,6 @@ const CreateNewPollForm = () => {
           name="nbr_voices"
           type="number"
           min="0"
-          defaultValue="10"
           required="required"
           autoComplete="off"
           onChange={pollForm.handleChange}
