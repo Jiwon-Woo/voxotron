@@ -20,5 +20,6 @@ from poll import views
 
 urlpatterns = [
     path('poll/api/', views.PollListApi.as_view()),
+    path('poll/api/<int:pk>', views.PollDetailApi.as_view()),
     path('admin/', admin.site.urls),
 ]
