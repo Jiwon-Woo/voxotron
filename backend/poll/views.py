@@ -33,3 +33,19 @@ class PollListApi(generics.ListCreateAPIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return response.Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class PollDetailApi(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PollInfo.objects.all()
+    serializer_class = PollSerializer
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=modifyValue(request), partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return response.Response(serializer.data)
