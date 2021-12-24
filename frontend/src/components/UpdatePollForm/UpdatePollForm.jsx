@@ -1,28 +1,33 @@
-import { React } from 'react';
-//import axios from 'axios';
+import { React, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 
-const formInitialValues = {
-  begin_at: '',
-  end_at: '',
-  nbr_voices: 10,
-  logins_voters: '',
-  logins_cands: '',
-};
-
-const CreateNewPollForm = () => {
+const UpdatePollForm = pollData => {
+  const [pollState, setPollState] = useState(false);
+  useEffect(() => {
+    if (Object.keys(pollData).length !== 0) setPollState(true);
+  }, []);
   const pollForm = useFormik({
-    initialValues: formInitialValues,
+    initialValues: {
+      begin_at: pollState ? pollData.begin_at : '',
+      end_at: pollState ? pollData.end_at : '',
+      nbr_voices: pollState ? pollData.nbr_voices : '',
+      logins_voters: pollState ? pollData.logins_voters : '',
+      logins_cands: pollState ? pollData.logins_cands : '',
+    },
     onSubmit: (values, { setSubmitting }) => {
       setSubmitting(true);
-      console.log(values);
+      if (pollState) {
+        console.log('Poll Updating!');
+      } else {
+        console.log(`Poll Created! ${values}`);
+      }
       setSubmitting(false);
     },
   });
 
   return (
-    <div className="create-new-poll">
-      <h1>Create New Poll</h1>
+    <div className="update-new-poll">
+      <h1>{pollState ? 'Update Poll' : 'Create New Poll'}</h1>
       <form id="poll-form" onSubmit={pollForm.handleSubmit}>
         <label name="begin-at">Begin at</label>
         <input
@@ -77,4 +82,4 @@ const CreateNewPollForm = () => {
   );
 };
 
-export default CreateNewPollForm;
+export default UpdatePollForm;

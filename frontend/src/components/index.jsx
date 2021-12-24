@@ -1,4 +1,5 @@
-import CreateNewPollForm from './CreateNewPollForm';
 import ViewPollsContainer from './ViewPollsContainer';
+import UpdatePollForm from './UpdatePollForm';
+import { GetAllData, GetOneData } from './ServerDataComponent';
 
-export { CreateNewPollForm, ViewPollsContainer };
+export { ViewPollsContainer, UpdatePollForm, GetAllData, GetOneData };

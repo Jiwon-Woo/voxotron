@@ -1,10 +1,10 @@
 import { React } from 'react';
-import { CreateNewPollForm } from '../../components';
+import { UpdatePollForm } from '../../components';
 
 const CreateNewPollPage = () => {
   return (
     <>
-      <CreateNewPollForm />
+      <UpdatePollForm />
     </>
   );
 };
