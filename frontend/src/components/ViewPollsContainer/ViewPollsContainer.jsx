@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const ViewPollsContainer = () => {
   const [data, setData] = useState([]);
@@ -29,8 +30,14 @@ const ViewPollsContainer = () => {
           <span>{d.logins_voters}</span>
           <br />
           <span>{d.nbr_voices}</span>
+          <Link to={`./${String(d.poll_id)}/update`}>
+            <button>수정하기</button>
+          </Link>
         </div>
       ))}
+      <Link to={'./1/update'}>
+        <button>수정하기</button>
+      </Link>
     </div>
   );
 };
