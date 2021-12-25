@@ -6,7 +6,7 @@ const ViewPollsContainer = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get('api/', {
+      .get('/api/', {
         withCredentials: true,
       })
       .then(response => {
@@ -17,6 +17,7 @@ const ViewPollsContainer = () => {
         console.log(error);
       });
   }, []);
+  /*
   return (
     <div className="view-polls-container">
       <h1>Poll List</h1>
@@ -36,6 +37,23 @@ const ViewPollsContainer = () => {
         </div>
       ))}
     </div>
+  );
+  */
+  console.log(`data id: ${data.poll_id} ======`);
+  return (
+    <>
+      <br />
+      <div>{data.begin_at}</div>
+      <div>{data.end_at}</div>
+      <span>{data.logins_cands}</span>
+      <br />
+      <span>{data.logins_voters}</span>
+      <br />
+      <span>{data.nbr_voices}</span>
+      <Link to={`./update`}>
+        <button>수정하기</button>
+      </Link>
+    </>
   );
 };
 
