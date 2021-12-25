@@ -35,9 +35,6 @@ const ViewPollsContainer = () => {
           </Link>
         </div>
       ))}
-      <Link to={'./1/update'}>
-        <button>수정하기</button>
-      </Link>
     </div>
   );
 };
