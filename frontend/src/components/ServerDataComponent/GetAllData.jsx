@@ -3,11 +3,10 @@ import axios from 'axios';
 const GetAllData = () => {
   let returnData = [];
   axios
-    .get('/api/?format=json', {
+    .get('/api/', {
       withCredentials: true,
     })
     .then(response => {
-      console.log(response.data);
       returnData = response.data;
     })
     .catch(error => {
