@@ -3,11 +3,10 @@ import axios from 'axios';
 const GetOneData = id => {
   let returnData = {};
   axios
-    .get('/api/?format=json', {
+    .get('/api/', {
       withCredentials: true,
     })
     .then(response => {
-      console.log(response.data);
       returnData = response.data.find(obj => obj.poll_id === id);
     })
     .catch(error => {
