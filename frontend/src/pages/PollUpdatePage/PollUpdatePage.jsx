@@ -1,11 +1,14 @@
 import { React } from 'react';
-import { useParams } from 'react-router-dom';
-import { GetOneData, UpdatePollForm } from '../../components';
+//import { useParams } from 'react-router-dom';
+//import { GetOneData, UpdatePollForm } from '../../components';
+import { GetAllData, UpdatePollForm } from '../../components';
 
 const PollUpdatePage = () => {
-  const { poll_id } = useParams();
-  console.log(poll_id);
-  const pollData = GetOneData(poll_id);
+  //const { poll_id } = useParams();
+  //console.log(poll_id);
+  //const pollData = GetOneData(poll_id);
+  //return <UpdatePollForm pollData={pollData} />;
+  const pollData = GetAllData();
   return <UpdatePollForm pollData={pollData} />;
 };
 
