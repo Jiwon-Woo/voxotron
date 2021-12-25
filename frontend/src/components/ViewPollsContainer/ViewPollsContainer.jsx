@@ -39,7 +39,6 @@ const ViewPollsContainer = () => {
     </div>
   );
   */
-  console.log(`data id: ${data.poll_id} ======`);
   return (
     <>
       <br />
