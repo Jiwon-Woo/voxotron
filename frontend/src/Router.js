@@ -1,5 +1,5 @@
 import { React } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import {
   CreateNewPollPage,
   PollListPage,
@@ -15,6 +15,7 @@ const Router = () => {
         <Route exact path="/create" element={<CreateNewPollPage />} />
         <Route exact path="/poll" element={<PollListPage />} />
         <Route path="/poll/:poll_id/update" element={<PollUpdatePage />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );
