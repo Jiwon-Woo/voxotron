@@ -19,6 +19,15 @@ const UpdatePollForm = pollData => {
       setSubmitting(true);
       if (pollState) {
         console.log('Poll Updating!');
+        axios
+          .put('/api/', values)
+          .then(res => {
+            console.log(res);
+            setSubmitting(false);
+          })
+          .catch(e => {
+            console.log(e);
+          });
       } else {
         console.log('Poll Created!');
         axios
