@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
+import axios from 'axios';
 
 const UpdatePollForm = pollData => {
   const [pollState, setPollState] = useState(false);
@@ -19,7 +20,16 @@ const UpdatePollForm = pollData => {
       if (pollState) {
         console.log('Poll Updating!');
       } else {
-        console.log(`Poll Created! ${values}`);
+        console.log('Poll Created!');
+        axios
+          .post('/api/', values)
+          .then(res => {
+            console.log(res);
+            setSubmitting(false);
+          })
+          .catch(e => {
+            console.log(e);
+          });
       }
       setSubmitting(false);
     },

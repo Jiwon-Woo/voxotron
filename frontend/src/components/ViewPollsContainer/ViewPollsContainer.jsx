@@ -6,7 +6,7 @@ const ViewPollsContainer = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get('/api/?format=json', {
+      .get('api/', {
         withCredentials: true,
       })
       .then(response => {
