@@ -1,34 +1,47 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-const UpdatePollForm = ifUpdate => {
-  const [ifSubmit, setIfSubmit] = useState(false);
+const UpdatePollForm = () => {
+  const [initialValues, setInitialValues] = useState({
+    begin_at: '',
+    end_at: '',
+    nbr_voices: 0,
+    logins_voters: '',
+    logins_cands: '',
+  });
+  const [ifUpdate, setIfUpdate] = useState(false);
+  const navigate = useNavigate();
   const location = useLocation();
-  const initialValues = {
-    begin_at: ifUpdate ? location.state.begin_at.split('+')[0] : '',
-    end_at: ifUpdate ? location.state.end_at.split('+')[0] : '',
-    nbr_voices: ifUpdate ? location.state.nbr_voices : 0,
-    logins_voters: ifUpdate ? location.state.logins_voters : '',
-    logins_cands: ifUpdate ? location.state.logins_cands : '',
-  };
+  useEffect(() => {
+    if (location.state !== null) {
+      setInitialValues({
+        begin_at: location.state.begin_at.split('+')[0],
+        end_at: location.state.end_at.split('+')[0],
+        nbr_voices: location.state.nbr_voices,
+        logins_voters: location.state.logins_voters,
+        logins_cands: location.state.logins_cands,
+      });
+      setIfUpdate(true);
+    }
+  }, []);
   const pollForm = useFormik({
     enableReinitialize: true,
     initialValues: initialValues,
     onSubmit: (values, { setSubmitting }) => {
       setSubmitting(true);
-      console.log(values);
       if (ifUpdate) {
         axios
           .put('/api/1', values)
           .then(res => {
             console.log(res);
             setSubmitting(false);
-            setIfSubmit(true);
+            navigate('/');
           })
           .catch(e => {
             console.log(e);
+            setSubmitting(false);
           });
       } else {
         axios
@@ -36,16 +49,16 @@ const UpdatePollForm = ifUpdate => {
           .then(res => {
             console.log(res);
             setSubmitting(false);
-            setIfSubmit(true);
+            navigate('/');
           })
           .catch(e => {
             console.log(e);
+            setSubmitting(false);
           });
       }
       setSubmitting(false);
     },
   });
-  if (ifSubmit) return <Navigate to="/" />;
   return (
     <div className="update-new-poll">
       <h1>{ifUpdate ? 'Update Poll' : 'Create New Poll'}</h1>
