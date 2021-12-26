@@ -2,11 +2,7 @@ import { React } from 'react';
 import { UpdatePollForm } from '../../components';
 
 const CreateNewPollPage = () => {
-  return (
-    <>
-      <UpdatePollForm />
-    </>
-  );
+  return <UpdatePollForm ifUPdate={false} />;
 };
 
 export default CreateNewPollPage;
