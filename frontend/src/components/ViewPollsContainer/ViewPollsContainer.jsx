@@ -1,9 +1,22 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ViewPollsContainer = () => {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
+  const handleOnClick = e => {
+    e.preventDefault();
+    navigate('./update', {
+      state: {
+        begin_at: data.begin_at,
+        end_at: data.end_at,
+        nbr_voices: data.nbr_voices,
+        logins_cands: data.logins_cands,
+        logins_voters: data.logins_voters,
+      },
+    });
+  };
   useEffect(() => {
     axios
       .get('/api/', {
@@ -49,9 +62,7 @@ const ViewPollsContainer = () => {
       <span>{data.logins_voters}</span>
       <br />
       <span>{data.nbr_voices}</span>
-      <Link to={`./update`}>
-        <button>수정하기</button>
-      </Link>
+      <button onClick={handleOnClick}>수정하기</button>
     </>
   );
 };
