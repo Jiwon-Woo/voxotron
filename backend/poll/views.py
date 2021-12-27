@@ -23,9 +23,7 @@ class PollListApi(generics.ListCreateAPIView):
     def get(self, request):
         queryset = self.queryset.all() # invalid first, last option
         serializer = PollSerializer(queryset, many=True)
-        if not len(serializer.data):
-            return response.Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
-        return response.Response(serializer.data[0])
+        return response.Response(serializer.data)
 
     def post(self, request):
         value = modifyValue(request)
@@ -33,6 +31,7 @@ class PollListApi(generics.ListCreateAPIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return response.Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class PollDetailApi(generics.RetrieveUpdateDestroyAPIView):
     queryset = PollInfo.objects.all()
