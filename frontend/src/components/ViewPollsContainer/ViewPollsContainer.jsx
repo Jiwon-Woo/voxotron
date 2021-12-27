@@ -31,7 +31,7 @@ const ViewPollsContainer = () => {
         // handle error
         console.log(error);
       });
-  }
+  };
   useEffect(() => {
     axios
       .get('/api/', {
@@ -54,7 +54,7 @@ const ViewPollsContainer = () => {
       <div>logins_voters : {data && data.logins_voters}</div>
       <div>logins_cands : {data && data.logins_cands}</div>
       <button onClick={deleteApi}>DELETE</button>
-      {/* {data.map(d => (
+      {data.map(d => (
         <div key={d}>
           <br />
           <div>{d.begin_at}</div>
@@ -68,7 +68,7 @@ const ViewPollsContainer = () => {
             <button>수정하기</button>
           </Link>
         </div>
-      ))} */}
+      ))}
     </div>
   );
   */
