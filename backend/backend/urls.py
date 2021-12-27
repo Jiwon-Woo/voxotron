@@ -35,8 +35,13 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    # swagger
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+
+    # poll
     path('poll/api/', views.PollListApi.as_view()),
     path('poll/api/<int:pk>', views.PollDetailApi.as_view()),
+
+    # admin
     path('admin/', admin.site.urls),
 ]
