@@ -42,6 +42,10 @@ urlpatterns = [
     path('poll/api/', views.PollListApi.as_view()),
     path('poll/api/<int:pk>', views.PollDetailApi.as_view()),
 
+    # login
+    path('login/', views.GetCode),
+    path('', views.LoginApi),
+
     # admin
     path('admin/', admin.site.urls),
 ]
