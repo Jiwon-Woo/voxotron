@@ -1,4 +1,5 @@
-import CreateNewPollForm from './CreateNewPollForm';
 import ViewPollsContainer from './ViewPollsContainer';
+import UpdatePollForm from './UpdatePollForm';
+import NavigationBar from './NavigationBar';
 
-export { CreateNewPollForm, ViewPollsContainer };
+export { ViewPollsContainer, UpdatePollForm, NavigationBar };

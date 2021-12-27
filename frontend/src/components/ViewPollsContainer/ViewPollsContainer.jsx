@@ -1,39 +1,50 @@
 import { React, useEffect, useState } from 'react';
 // import { React, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ViewPollsContainer = () => {
-  // const [data, setData] = useState([]);
-  const [data, setData] = useState('');
-  function deleteApi() {
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+  const handleOnUpdate = e => {
+    e.preventDefault();
+    navigate('./update', {
+      state: {
+        begin_at: data.begin_at,
+        end_at: data.end_at,
+        nbr_voices: data.nbr_voices,
+        logins_cands: data.logins_cands,
+        logins_voters: data.logins_voters,
+      },
+    });
+  };
+  const handleOnDelete = e => {
+    e.preventDefault();
     axios
-      .delete('/poll/api/7')
-      .then(function (response) {
+      .delete('/api/7')
+      .then(response => {
         // handle success
         console.log(response);
+        navigate('./');
       })
-      .catch(function (error) {
+      .catch(error => {
         // handle error
         console.log(error);
-      })
-      .then(function () {
-        //navigate hook
-        console.log('delete button clicked');
       });
   }
   useEffect(() => {
     axios
-      .get('poll/api/', {
+      .get('/api/', {
         withCredentials: true,
       })
       .then(response => {
-        console.log(response.data);
         setData(response.data);
       })
       .catch(error => {
         console.log(error);
       });
   }, []);
+  /*
   return (
     <div className="view-polls-container">
       <h1>Poll List</h1>
@@ -53,9 +64,27 @@ const ViewPollsContainer = () => {
           <span>{d.logins_voters}</span>
           <br />
           <span>{d.nbr_voices}</span>
+          <Link to={`./${String(d.poll_id)}/update`}>
+            <button>수정하기</button>
+          </Link>
         </div>
       ))} */}
     </div>
+  );
+  */
+  return (
+    <>
+      <br />
+      <div>{data.begin_at}</div>
+      <div>{data.end_at}</div>
+      <span>{data.logins_cands}</span>
+      <br />
+      <span>{data.logins_voters}</span>
+      <br />
+      <span>{data.nbr_voices}</span>
+      <button onClick={handleOnUpdate}>수정하기</button>
+      <button onClick={handleOnDelete}>삭제하기</button>
+    </>
   );
 };
 

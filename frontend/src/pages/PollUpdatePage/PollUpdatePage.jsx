@@ -1,8 +1,8 @@
 import { React } from 'react';
 import { UpdatePollForm } from '../../components';
 
-const CreateNewPollPage = () => {
+const PollUpdatePage = () => {
   return <UpdatePollForm />;
 };
 
-export default CreateNewPollPage;
+export default PollUpdatePage;

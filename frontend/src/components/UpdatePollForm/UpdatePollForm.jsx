@@ -1,28 +1,67 @@
-import { React } from 'react';
-//import axios from 'axios';
+import { React, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
+import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-const formInitialValues = {
-  begin_at: '',
-  end_at: '',
-  nbr_voices: 10,
-  logins_voters: '',
-  logins_cands: '',
-};
-
-const CreateNewPollForm = () => {
+const UpdatePollForm = () => {
+  const [initialValues, setInitialValues] = useState({
+    begin_at: '',
+    end_at: '',
+    nbr_voices: 0,
+    logins_voters: '',
+    logins_cands: '',
+  });
+  const [ifUpdate, setIfUpdate] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    if (location.state !== null) {
+      setInitialValues({
+        begin_at: location.state.begin_at.split('+')[0],
+        end_at: location.state.end_at.split('+')[0],
+        nbr_voices: location.state.nbr_voices,
+        logins_voters: location.state.logins_voters,
+        logins_cands: location.state.logins_cands,
+      });
+      setIfUpdate(true);
+    }
+  }, []);
   const pollForm = useFormik({
-    initialValues: formInitialValues,
+    enableReinitialize: true,
+    initialValues: initialValues,
     onSubmit: (values, { setSubmitting }) => {
       setSubmitting(true);
-      console.log(values);
+      if (ifUpdate) {
+        axios
+          .put('/api/1', values)
+          .then(res => {
+            console.log(res);
+            setSubmitting(false);
+            navigate('/');
+          })
+          .catch(e => {
+            console.log(e);
+            setSubmitting(false);
+          });
+      } else {
+        axios
+          .post('/api/', values)
+          .then(res => {
+            console.log(res);
+            setSubmitting(false);
+            navigate('/');
+          })
+          .catch(e => {
+            console.log(e);
+            setSubmitting(false);
+          });
+      }
       setSubmitting(false);
     },
   });
-
   return (
-    <div className="create-new-poll">
-      <h1>Create New Poll</h1>
+    <div className="update-new-poll">
+      <h1>{ifUpdate ? 'Update Poll' : 'Create New Poll'}</h1>
       <form id="poll-form" onSubmit={pollForm.handleSubmit}>
         <label name="begin-at">Begin at</label>
         <input
@@ -77,4 +116,4 @@ const CreateNewPollForm = () => {
   );
 };
 
-export default CreateNewPollForm;
+export default UpdatePollForm;
