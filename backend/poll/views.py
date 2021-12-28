@@ -69,7 +69,8 @@ def LoginApi(request):
         context = {
             'id': None,
             'login': None,
-            'email': None
+            'email': None,
+            'staff': None,
         }
         return render(request, 'poll/login.html', context)
     data = {
@@ -89,14 +90,11 @@ def LoginApi(request):
 
     info = requests.get(os.environ.get('INFO_URL'), headers=headers)
     info_to_json = info.json()
-    id = info_to_json.get("id")
-    login = info_to_json.get("login")
-    email = info_to_json.get("email")
-    image_url = info_to_json.get("image_url")
     user_data = {
-        'id': id,
-        'login': login,
-        'email': email,
-        'image_url': image_url
+        'id': info_to_json.get("id"),
+        'login': info_to_json.get("login"),
+        'email': info_to_json.get("email"),
+        'staff': info_to_json.get("staff?"),
+        'image_url': info_to_json.get("image_url"),
     }
     return render(request, 'poll/login.html', user_data)
