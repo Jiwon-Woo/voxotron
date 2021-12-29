@@ -2,6 +2,9 @@ import { React, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import TextareaAutosize from 'react-textarea-autosize';
+import Input from '@mui/material/Input';
+import './UpdatePollForm.css';
 
 const UpdatePollForm = () => {
   const [initialValues, setInitialValues] = useState({
@@ -60,54 +63,84 @@ const UpdatePollForm = () => {
     },
   });
   return (
-    <div className="update-new-poll">
+    <div className="update-new-poll ui form">
       <h1>{ifUpdate ? 'Update Poll' : 'Create New Poll'}</h1>
       <form id="poll-form" onSubmit={pollForm.handleSubmit}>
-        <label name="begin-at">Begin at</label>
-        <input
-          id="begin_at"
-          name="begin_at"
-          type="datetime-local"
-          onChange={pollForm.handleChange}
-          value={pollForm.values.begin_at}
-        />
-        <br />
-        <label name="end-at">End at</label>
-        <input
-          id="end_at"
-          name="end_at"
-          type="datetime-local"
-          onChange={pollForm.handleChange}
-          value={pollForm.values.end_at}
-        />
-        <br />
-        <label name="nbr-voices">Nbr voices</label>
-        <input
-          id="nbr_voices"
-          name="nbr_voices"
-          type="number"
-          min="0"
-          required="required"
-          autoComplete="off"
-          onChange={pollForm.handleChange}
-          value={pollForm.values.nbr_voices}
-        />
-        <br />
-        <label name="logins-voters">Login Voters</label>
-        <textarea
-          id="logins_voters"
-          name="logins_voters"
-          onChange={pollForm.handleChange}
-          value={pollForm.values.logins_voters}
-        ></textarea>
-        <br />
-        <label name="logins-cands">Login Candidates</label>
-        <textarea
-          id="logins_cands"
-          name="logins_cands"
-          onChange={pollForm.handleChange}
-          value={pollForm.values.logins_cands}
-        ></textarea>
+        <table className="fields">
+          <tbody>
+            <tr>
+              <td>
+                <label name="begin-at">Begin at</label>
+              </td>
+              <td>
+                <Input
+                  id="begin_at"
+                  name="begin_at"
+                  type="datetime-local"
+                  onChange={pollForm.handleChange}
+                  value={pollForm.values.begin_at}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label name="end-at">End at</label>
+              </td>
+              <td>
+                <Input
+                  id="end_at"
+                  name="end_at"
+                  type="datetime-local"
+                  onChange={pollForm.handleChange}
+                  value={pollForm.values.end_at}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label name="nbr-voices">Nbr voices</label>
+              </td>
+              <td>
+                <input
+                  id="nbr_voices"
+                  name="nbr_voices"
+                  type="number"
+                  min="0"
+                  required="required"
+                  autoComplete="off"
+                  onChange={pollForm.handleChange}
+                  value={pollForm.values.nbr_voices}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label name="logins-voters">Login Voters</label>
+              </td>
+              <td>
+                <TextareaAutosize
+                  id="logins_voters"
+                  name="logins_voters"
+                  onChange={pollForm.handleChange}
+                  value={pollForm.values.logins_voters}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label name="logins-cands">Login Candidates</label>
+              </td>
+              <td>
+                <TextareaAutosize
+                  id="logins_cands"
+                  name="logins_cands"
+                  onChange={pollForm.handleChange}
+                  value={pollForm.values.logins_cands}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <button type="submit" form="poll-form" disabled={pollForm.isSubmitting}>
           submit
         </button>
