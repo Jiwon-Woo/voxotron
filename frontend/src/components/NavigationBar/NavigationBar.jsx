@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
+import './NavigationBar.css';
 
 const NavigationBar = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const NavigationBar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar className="navigation-bar" position="static">
       <Container maxWidth="xl">
         <Box sx={{ flexGrow: 1, display: 'flex' }}>
           <MenuItem key="create" onClick={handleClickCreate}>
