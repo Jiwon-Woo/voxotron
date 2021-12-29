@@ -17,7 +17,7 @@ const NavigationBar = () => {
   };
 
   return (
-    <AppBar className="navigation-bar" position="static">
+    <AppBar id="navigation-bar" className="navigation-bar" position="static">
       <Container maxWidth="xl">
         <Box sx={{ flexGrow: 1, display: 'flex' }}>
           <MenuItem key="create" onClick={handleClickCreate}>
