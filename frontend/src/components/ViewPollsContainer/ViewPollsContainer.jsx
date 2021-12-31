@@ -2,6 +2,18 @@ import { React, useEffect, useState } from 'react';
 // import { React, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
+import { Stack } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+// import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
 
 const ViewPollsContainer = () => {
   const [data, setData] = useState([]);
@@ -44,46 +56,74 @@ const ViewPollsContainer = () => {
         console.log(error);
       });
   }, []);
-  /*
-  return (
-    <div className="view-polls-container">
-      <h1>Poll List</h1>
-      <div>begin_at : {data && data.begin_at}</div>
-      <div>end_at : {data && data.end_at}</div>
-      <div>nbr_voices : {data && data.nbr_voices}</div>
-      <div>logins_voters : {data && data.logins_voters}</div>
-      <div>logins_cands : {data && data.logins_cands}</div>
-      <button onClick={deleteApi}>DELETE</button>
-      {data.map(d => (
-        <div key={d}>
-          <br />
-          <div>{d.begin_at}</div>
-          <div>{d.end_at}</div>
-          <span>{d.logins_cands}</span>
-          <br />
-          <span>{d.logins_voters}</span>
-          <br />
-          <span>{d.nbr_voices}</span>
-          <Link to={`./${String(d.poll_id)}/update`}>
-            <button>수정하기</button>
-          </Link>
-        </div>
-      ))}
-    </div>
-  );
-  */
   return (
     <>
-      <br />
-      <div>{data.begin_at}</div>
-      <div>{data.end_at}</div>
-      <span>{data.logins_cands}</span>
-      <br />
-      <span>{data.logins_voters}</span>
-      <br />
-      <span>{data.nbr_voices}</span>
-      <button onClick={handleOnUpdate}>수정하기</button>
-      <button onClick={handleOnDelete}>삭제하기</button>
+      <Container component="main" maxWidth="sm">
+        <Paper
+          variant="outlined"
+          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+        >
+          <Typography component="h2" variant="h6" color="primary">
+            POLL NAME
+          </Typography>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <b>Begin at</b>
+                </TableCell>
+                <TableCell align="right">{data.begin_at}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <b>End at</b>
+                </TableCell>
+                <TableCell align="right">{data.end_at}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <b>nbr_voices</b>
+                </TableCell>
+                <TableCell align="right">{data.nbr_voices}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <b>logins_cands</b>
+                </TableCell>
+                <TableCell align="right">{data.logins_cands}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <b>logins_voters</b>
+                </TableCell>
+                <TableCell align="right">{data.logins_voters}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+          <Stack
+            sx={{ pt: 4 }}
+            direction="row"
+            spacing={2}
+            justifyContent="center"
+          >
+            <Button
+              variant="outlined"
+              startIcon={<EditIcon />}
+              onClick={handleOnUpdate}
+            >
+              Edit
+            </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              startIcon={<DeleteForeverIcon />}
+              onClick={handleOnDelete}
+            >
+              Delete
+            </Button>
+          </Stack>
+        </Paper>
+      </Container>
     </>
   );
 };

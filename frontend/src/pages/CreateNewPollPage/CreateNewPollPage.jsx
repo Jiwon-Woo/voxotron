@@ -1,8 +1,13 @@
 import { React } from 'react';
-import { UpdatePollForm } from '../../components';
+import { NavigationBar, UpdatePollForm } from '../../components';
 
 const CreateNewPollPage = () => {
-  return <UpdatePollForm />;
+  return (
+    <>
+      <NavigationBar />
+      <UpdatePollForm />
+    </>
+  );
 };
 
 export default CreateNewPollPage;
