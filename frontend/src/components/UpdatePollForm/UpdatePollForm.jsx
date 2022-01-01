@@ -17,6 +17,37 @@ const UpdatePollForm = () => {
   const [ifUpdate, setIfUpdate] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const checkIfDuplicates = arr => {
+    const arrSet = new Set(arr);
+    return arr.length !== arrSet.size;
+  };
+  const validateValues = ({
+    begin_at,
+    end_at,
+    logins_voters,
+    logins_cands,
+  }) => {
+    let errors = {};
+    const now_date = new Date();
+    const begin_date = new Date(begin_at);
+    const end_date = new Date(end_at);
+    const voters_arr = logins_voters.split('\n');
+    const cands_arr = logins_cands.split('\n');
+    if (begin_date < now_date)
+      errors.begin_date = 'begin date is after end date';
+    if (begin_date > end_date) errors.end_date = 'begin date is after end date';
+    voters_arr.forEach(data => {
+      if (data && !/^[a-z0-9]+$/i.test(data))
+        errors.voters_arr = `${data} is invalid: only alphanumeric characters allowed`;
+    });
+    if (checkIfDuplicates(voters_arr)) errors.voters_arr = 'Duplicate field';
+    cands_arr.forEach(data => {
+      if (data && !/^[a-z0-9]+$/i.test(data))
+        errors.cands_arr = `${data} is invalid: only alphanumeric characters allowed`;
+    });
+    if (checkIfDuplicates(cands_arr)) errors.cands_arr = 'Duplicate field';
+    return errors;
+  };
   useEffect(() => {
     if (location.state !== null) {
       setInitialValues({
@@ -32,6 +63,7 @@ const UpdatePollForm = () => {
   const pollForm = useFormik({
     enableReinitialize: true,
     initialValues: initialValues,
+    validate: validateValues,
     onSubmit: (values, { setSubmitting }) => {
       setSubmitting(true);
       if (ifUpdate) {
@@ -47,6 +79,7 @@ const UpdatePollForm = () => {
             setSubmitting(false);
           });
       } else {
+        validateValues(values);
         axios
           .post('/api/', values)
           .then(res => {
@@ -77,6 +110,7 @@ const UpdatePollForm = () => {
                   id="begin_at"
                   name="begin_at"
                   type="datetime-local"
+                  required="required"
                   onChange={pollForm.handleChange}
                   value={pollForm.values.begin_at}
                 />
@@ -91,6 +125,7 @@ const UpdatePollForm = () => {
                   id="end_at"
                   name="end_at"
                   type="datetime-local"
+                  required="required"
                   onChange={pollForm.handleChange}
                   value={pollForm.values.end_at}
                 />
