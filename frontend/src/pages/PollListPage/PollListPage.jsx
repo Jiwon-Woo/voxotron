@@ -1,9 +1,10 @@
 import { React } from 'react';
-import { ViewPollsContainer } from '../../components';
+import { NavigationBar, ViewPollsContainer } from '../../components';
 
 const PollListPage = () => {
   return (
     <>
+      <NavigationBar />
       <div>
         <h1>POLL LIST</h1>
       </div>
