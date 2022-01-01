@@ -4,6 +4,7 @@
 }
 
 #root {
+  height: 100vh;
   background: rgb(37, 41, 45);
   background: linear-gradient(
     180deg,
