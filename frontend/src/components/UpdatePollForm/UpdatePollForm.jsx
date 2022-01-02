@@ -37,12 +37,12 @@ const UpdatePollForm = () => {
       errors.begin_date = 'begin date is after end date';
     if (begin_date > end_date) errors.end_date = 'begin date is after end date';
     voters_arr.forEach(data => {
-      if (data && !/^[a-z0-9]+$/i.test(data))
+      if (data && !/^[a-z0-9-]+$/i.test(data))
         errors.voters_arr = `${data} is invalid: only alphanumeric characters allowed`;
     });
     if (checkIfDuplicates(voters_arr)) errors.voters_arr = 'Duplicate field';
     cands_arr.forEach(data => {
-      if (data && !/^[a-z0-9]+$/i.test(data))
+      if (data && !/^[a-z0-9-]+$/i.test(data))
         errors.cands_arr = `${data} is invalid: only alphanumeric characters allowed`;
     });
     if (checkIfDuplicates(cands_arr)) errors.cands_arr = 'Duplicate field';
