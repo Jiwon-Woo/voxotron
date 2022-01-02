@@ -18,7 +18,9 @@ from django.urls import path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from poll import views
+
+from poll import views as pv
+from login import views as lv
 
 
 schema_view = get_schema_view(
@@ -39,12 +41,12 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     # poll
-    path('poll/api/', views.PollListApi.as_view()),
-    path('poll/api/<int:pk>', views.PollDetailApi.as_view()),
+    path('poll/api/', pv.PollListApi.as_view()),
+    path('poll/api/<int:pk>', pv.PollDetailApi.as_view()),
 
     # login
-    path('login/', views.GetCode),
-    path('', views.LoginApi),
+    path('login/', lv.GetCode),
+    path('', lv.LoginApi),
 
     # admin
     path('admin/', admin.site.urls),

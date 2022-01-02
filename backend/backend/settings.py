@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'poll',
     'rest_framework',
     'drf_yasg',
+    'login',
 ]
 
 MIDDLEWARE = [
