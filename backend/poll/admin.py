@@ -17,6 +17,4 @@ class CreatePollAdmin(admin.ModelAdmin):
         'begin_at',
         'end_at',
         'nbr_voices',
-        'logins_voters',
-        'logins_cands',
     )
