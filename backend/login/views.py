@@ -36,7 +36,7 @@ def LoginApi(request):
         'Authorization': f'Bearer {access_token}'
     }
 
-    info = requests.get(os.environ.get('INFO_URL'), headers=headers)
+    info = requests.get(os.environ.get('ME_URL'), headers=headers)
     info_to_json = info.json()
     user_data = {
         'id': info_to_json.get("id"),

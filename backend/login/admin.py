@@ -8,11 +8,9 @@ class LoginUserAdmin(admin.ModelAdmin):
         'id',
         'login_id',
         'is_staff',
-        'group',
-        'anonymize_date',
+        'info_data',
     )
     search_fields = (
         'id',
         'login_id',
-        'group',
     )
