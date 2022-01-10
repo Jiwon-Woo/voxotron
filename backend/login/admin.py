@@ -5,12 +5,12 @@ from .models import UserInfo
 @admin.register(UserInfo)
 class LoginUserAdmin(admin.ModelAdmin):
     list_display = (
-        'id',
+        'intra_id',
         'login_id',
         'is_staff',
-        'info_data',
+        # 'info_data',
     )
     search_fields = (
-        'id',
+        'intra_id',
         'login_id',
     )
