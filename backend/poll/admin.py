@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import PollInfo
+from .models import PollInfo, PollAndUserRelationship
 
 
 @admin.register(PollInfo)
@@ -17,4 +17,13 @@ class CreatePollAdmin(admin.ModelAdmin):
         'begin_at',
         'end_at',
         'nbr_voices',
+    )
+
+
+@admin.register(PollAndUserRelationship)
+class RelationshipAdmin(admin.ModelAdmin):
+    list_display = (
+        'poll',
+        'user',
+        'role'
     )
