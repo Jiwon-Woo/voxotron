@@ -23,6 +23,12 @@ class PollListApi(generics.ListCreateAPIView, generics.DestroyAPIView):
 
     def get(self, request):
         queryset = self.queryset.all().order_by('-poll_id')  # invalid first, last option
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
         serializer = PollSerializer(queryset, many=True)
         return response.Response(serializer.data)
 
