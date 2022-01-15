@@ -42,7 +42,6 @@ urlpatterns = [
 
     # poll
     path('poll/api/', pv.PollListApi.as_view()),
-    path('poll/api/delete', pv.DeleteMultiPollApi.as_view()),
     path('poll/api/<int:pk>', pv.PollDetailApi.as_view()),
 
     # login

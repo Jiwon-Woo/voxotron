@@ -1,12 +1,7 @@
-import json
-import os
-
-from .serializers import PollSerializer, DeleteMultiPollSerializer
+from .serializers import PollSerializer
 from .models import PollInfo
-from django.shortcuts import redirect, render
-from rest_framework import generics, response, status
 
-import requests
+from rest_framework import generics, response, status
 
 
 def replaceValue(key, value):
@@ -22,14 +17,9 @@ def modifyValue(request):
     return next_value
 
 
-class PollListApi(generics.ListCreateAPIView):
+class PollListApi(generics.ListCreateAPIView, generics.DestroyAPIView):
     queryset = PollInfo.objects.all()
     serializer_class = PollSerializer
-
-    def get(self, request):
-        queryset = self.queryset.all() # invalid first, last option
-        serializer = PollSerializer(queryset, many=True)
-        return response.Response(serializer.data)
 
     def post(self, request):
         value = modifyValue(request)
@@ -37,6 +27,11 @@ class PollListApi(generics.ListCreateAPIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return response.Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.filter_queryset(self.get_queryset())
+        self.perform_destroy(instance)
+        return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class PollDetailApi(generics.RetrieveUpdateDestroyAPIView):
@@ -54,23 +49,3 @@ class PollDetailApi(generics.RetrieveUpdateDestroyAPIView):
             instance._prefetched_objects_cache = {}
 
         return response.Response(serializer.data)
-
-
-# 수정 필요
-class DeleteMultiPollApi(generics.CreateAPIView):
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return response.Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-    # def destroy(self, request, *args, **kwargs):
-    #     # serializer = DelSerializer
-    #     print("1")
-    #     print(">>>>>>", *args, " | ", **kwargs)
-    #     instance = self.filter_queryset(self.get_queryset())
-    #     print(instance)
-    #     self.perform_destroy(instance)
-    #     print("3")
-    #     return response.Response(status=status.HTTP_204_NO_CONTENT)
