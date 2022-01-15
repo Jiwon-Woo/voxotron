@@ -21,6 +21,11 @@ class PollListApi(generics.ListCreateAPIView, generics.DestroyAPIView):
     queryset = PollInfo.objects.all()
     serializer_class = PollSerializer
 
+    def get(self, request):
+        queryset = self.queryset.all().order_by('-poll_id')  # invalid first, last option
+        serializer = PollSerializer(queryset, many=True)
+        return response.Response(serializer.data)
+
     def post(self, request):
         value = modifyValue(request)
         serializer = PollSerializer(data=value)
