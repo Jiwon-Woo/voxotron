@@ -2,35 +2,34 @@ version: "3.8"
 
 services:
   web:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+
+  api:
     build: ./backend
-      #command: python manage.py runserver 0.0.0.0:8000
     command: sh -c "python3 manage.py makemigrations &&
                     python3 manage.py migrate &&
                     python3 manage.py collectstatic --noinput &&
                     gunicorn backend.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - ./backend/:/home/voxotron/
+    ports:
+      - 8000:8000
     expose:
       - 8000
     env_file:
       - ./.env.dev
 
-  nginx:
-    build: ./nginx
-    #image: nginx:latest
-    ports:
-      - 80:80
-        #- 443:443
-        #restart: always
-    depends_on:
-      - web
-        #volumes:
-      #- ./nginx/conf/:/etc/nginx/conf.d/:ro
-        #- ./certbot/www:/var/www/certbot/:ro
-        #- ./certbot/conf:/etc/nginx/ssl/:ro
-    
-        #certbot:
-        #image: certbot/certbot:latest
-        #volumes:
-        #- ./certbot/www/:/var/www/certbot/:rw
-        #- ./certbot/conf/:/etc/letsencrypt/:rw
+        #  nginx:
+        #    image: nginx:alpine
+        #    ports:
+        #      - 80:80
+        #     #- 443:443 # need ssl/tls setting
+        #    volumes:
+        #      - ./default.conf:/etc/nginx/conf.d
+        #      - ./nginx/error.log:/etc/nginx/error_log.log # should care about log
+        #      - ./nginx/cache/:/etc/nginx/cache
+        #     #- /etc/letsencrypt/:/etc/letsencrypt/
